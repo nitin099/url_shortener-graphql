@@ -1,6 +1,6 @@
 import graphene
 from graphene_django import DjangoObjectType
-
+from django.db.utils import IntegrityError
 from .models import URL
 
 
@@ -24,7 +24,11 @@ class CreateURL(graphene.Mutation):
 
     def mutate(self, info, full_url):
         url = URL(full_url=full_url)
-        url.save()
+        try:
+            url.save()
+        except IntegrityError:
+            url = URL.objects.get(full_url=full_url)
+            return CreateURL(url=url)
 
         return CreateURL(url=url)
 
