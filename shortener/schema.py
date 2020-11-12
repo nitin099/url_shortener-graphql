@@ -23,6 +23,7 @@ class CreateURL(graphene.Mutation):
         full_url = graphene.String()
 
     def mutate(self, info, full_url):
+        # import pdb; pdb.set_trace()
         url = URL(full_url=full_url)
         try:
             url.save()
