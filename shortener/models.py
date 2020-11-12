@@ -9,7 +9,7 @@ class URL(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def clicked(self):
-        self.click += 1
+        self.clicks += 1
         self.save()
 
     def save(self, *args, **kwargs):
